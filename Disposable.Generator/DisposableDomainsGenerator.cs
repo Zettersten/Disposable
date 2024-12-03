@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
 namespace Disposable.Generator;
@@ -6,7 +6,7 @@ namespace Disposable.Generator;
 [Generator]
 public sealed class DisposableDomainsGenerator : IIncrementalGenerator
 {
-    private const string Url =
+    private const string url =
         "https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -35,7 +35,7 @@ public sealed class DisposableDomainsGenerator : IIncrementalGenerator
     private static ImmutableArray<string> GetDomains()
     {
         using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
-        var response = client.GetAsync(Url).ConfigureAwait(false).GetAwaiter().GetResult();
+        var response = client.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
         var content = response
             .Content.ReadAsStringAsync()
             .ConfigureAwait(false)

@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{A2F8562E-9
 		version.json = version.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Tests", "Disposable.Tests\Disposable.Tests.csproj", "{B56997F5-425D-4BB7-A4CA-57BEFCE5C3EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{72272FE7-BE1D-49F8-863A-E2B0DA6A9C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72272FE7-BE1D-49F8-863A-E2B0DA6A9C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72272FE7-BE1D-49F8-863A-E2B0DA6A9C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B56997F5-425D-4BB7-A4CA-57BEFCE5C3EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B56997F5-425D-4BB7-A4CA-57BEFCE5C3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B56997F5-425D-4BB7-A4CA-57BEFCE5C3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B56997F5-425D-4BB7-A4CA-57BEFCE5C3EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

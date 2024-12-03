@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -10,15 +10,14 @@ namespace Disposable;
 internal static partial class ValidatorHelpers
 {
     // Maximum length constraints as per RFC 5321
-    private const int MaxLocalPartLength = 64;
-
-    private const int MaxDomainLength = 255;
-    private const int MaxTotalLength = 254;
+    private const int maxLocalPartLength = 64;
+    private const int maxDomainLength = 255;
+    private const int maxTotalLength = 254;
 
     // Span-based validation for high performance
     public static bool IsValidEmail(ReadOnlySpan<char> email)
     {
-        if (email.IsEmpty || email.Length > MaxTotalLength)
+        if (email.IsEmpty || email.Length > maxTotalLength)
             return false;
 
         int atIndex = email.IndexOf('@');
@@ -35,7 +34,7 @@ internal static partial class ValidatorHelpers
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsValidEmailQuick(string? email)
     {
-        if (string.IsNullOrWhiteSpace(email) || email.Length > MaxTotalLength)
+        if (string.IsNullOrWhiteSpace(email) || email.Length > maxTotalLength)
             return false;
         return GetEmailRegex().IsMatch(email);
     }
@@ -49,7 +48,7 @@ internal static partial class ValidatorHelpers
         localPart = default;
         domain = default;
 
-        if (email.IsEmpty || email.Length > MaxTotalLength)
+        if (email.IsEmpty || email.Length > maxTotalLength)
             return false;
 
         int atIndex = email.IndexOf('@');
@@ -63,7 +62,7 @@ internal static partial class ValidatorHelpers
 
     private static bool IsValidLocalPart(ReadOnlySpan<char> localPart)
     {
-        if (localPart.IsEmpty || localPart.Length > MaxLocalPartLength)
+        if (localPart.IsEmpty || localPart.Length > maxLocalPartLength)
             return false;
 
         // Check for quoted string format
@@ -78,7 +77,7 @@ internal static partial class ValidatorHelpers
 
     private static bool IsValidDomain(ReadOnlySpan<char> domain)
     {
-        if (domain.IsEmpty || domain.Length > MaxDomainLength)
+        if (domain.IsEmpty || domain.Length > maxDomainLength)
             return false;
 
         // Handle IP address literals [IPv4 or IPv6]
@@ -144,7 +143,7 @@ internal static partial class ValidatorHelpers
             previousChar = c;
         }
 
-        return previousChar != '.' && (!hasDot || localPart.Length <= MaxLocalPartLength);
+        return previousChar != '.' && (!hasDot || localPart.Length <= maxLocalPartLength);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

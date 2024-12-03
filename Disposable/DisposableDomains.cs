@@ -6,14 +6,14 @@ namespace Disposable;
 
 internal static class DisposableDomains
 {
-    private static readonly FrozenSet<string> _domains = GetDomains();
+    private static readonly FrozenSet<string> domains = GetDomains();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool Contains(ReadOnlySpan<char> domain)
     {
         if (domain.IsEmpty)
             return false;
-        return _domains.Contains(domain.ToString());
+        return domains.Contains(domain.ToString());
     }
 
     private static FrozenSet<string> GetDomains() =>
