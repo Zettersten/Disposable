@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2024 Erik Zettersten</Copyright>
     <Company>Disposable</Company>
     <Product>Disposable SDK</Product>
-    <PackageId>Disposable.Generator</PackageId>
+    <PackageId>Disposable.Email.Generator</PackageId>
     <Version>$(GITHUB_REF_NAME.TrimStart('v'))</Version>
     <Description></Description>
     <PackageProjectUrl>https://github.com/Zettersten/Disposable</PackageProjectUrl>
