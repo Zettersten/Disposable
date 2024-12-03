@@ -18,10 +18,12 @@ internal static partial class ValidatorHelpers
     // Span-based validation for high performance
     public static bool IsValidEmail(ReadOnlySpan<char> email)
     {
-        if (email.IsEmpty || email.Length > MaxTotalLength) return false;
+        if (email.IsEmpty || email.Length > MaxTotalLength)
+            return false;
 
         int atIndex = email.IndexOf('@');
-        if (atIndex <= 0 || atIndex == email.Length - 1) return false;
+        if (atIndex <= 0 || atIndex == email.Length - 1)
+            return false;
 
         var localPart = email[..atIndex];
         var domain = email[(atIndex + 1)..];
@@ -33,19 +35,26 @@ internal static partial class ValidatorHelpers
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsValidEmailQuick(string? email)
     {
-        if (string.IsNullOrWhiteSpace(email) || email.Length > MaxTotalLength) return false;
+        if (string.IsNullOrWhiteSpace(email) || email.Length > MaxTotalLength)
+            return false;
         return GetEmailRegex().IsMatch(email);
     }
 
-    public static bool TryParseEmailParts(ReadOnlySpan<char> email, out ReadOnlySpan<char> localPart, out ReadOnlySpan<char> domain)
+    public static bool TryParseEmailParts(
+        ReadOnlySpan<char> email,
+        out ReadOnlySpan<char> localPart,
+        out ReadOnlySpan<char> domain
+    )
     {
         localPart = default;
         domain = default;
 
-        if (email.IsEmpty || email.Length > MaxTotalLength) return false;
+        if (email.IsEmpty || email.Length > MaxTotalLength)
+            return false;
 
         int atIndex = email.IndexOf('@');
-        if (atIndex <= 0 || atIndex == email.Length - 1) return false;
+        if (atIndex <= 0 || atIndex == email.Length - 1)
+            return false;
 
         localPart = email[..atIndex];
         domain = email[(atIndex + 1)..];
@@ -54,7 +63,8 @@ internal static partial class ValidatorHelpers
 
     private static bool IsValidLocalPart(ReadOnlySpan<char> localPart)
     {
-        if (localPart.IsEmpty || localPart.Length > MaxLocalPartLength) return false;
+        if (localPart.IsEmpty || localPart.Length > MaxLocalPartLength)
+            return false;
 
         // Check for quoted string format
         if (localPart[0] == '"' && localPart[^1] == '"')
@@ -68,7 +78,8 @@ internal static partial class ValidatorHelpers
 
     private static bool IsValidDomain(ReadOnlySpan<char> domain)
     {
-        if (domain.IsEmpty || domain.Length > MaxDomainLength) return false;
+        if (domain.IsEmpty || domain.Length > MaxDomainLength)
+            return false;
 
         // Handle IP address literals [IPv4 or IPv6]
         if (domain[0] == '[' && domain[^1] == ']')
@@ -92,8 +103,7 @@ internal static partial class ValidatorHelpers
         }
 
         // Validate the last label
-        return lastDotIndex > 0 &&
-               IsValidDomainLabel(domain[startIndex..]);
+        return lastDotIndex > 0 && IsValidDomainLabel(domain[startIndex..]);
     }
 
     private static bool ValidateQuotedLocalPart(ReadOnlySpan<char> quotedPart)
@@ -103,11 +113,13 @@ internal static partial class ValidatorHelpers
             char c = quotedPart[i];
             if (c == '\\')
             {
-                if (i == quotedPart.Length - 1) return false;
+                if (i == quotedPart.Length - 1)
+                    return false;
                 i++; // Skip next character as it's escaped
                 continue;
             }
-            if (c < 32 || c == 127) return false; // Control characters
+            if (c < 32 || c == 127)
+                return false; // Control characters
         }
         return true;
     }
@@ -121,7 +133,8 @@ internal static partial class ValidatorHelpers
         {
             if (c == '.')
             {
-                if (previousChar == '.' || previousChar == '\0') return false;
+                if (previousChar == '.' || previousChar == '\0')
+                    return false;
                 hasDot = true;
             }
             else if (!IsAllowedLocalPartChar(c))
@@ -136,23 +149,45 @@ internal static partial class ValidatorHelpers
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsAllowedLocalPartChar(char c) =>
-        (c >= 'a' && c <= 'z') ||
-        (c >= 'A' && c <= 'Z') ||
-        (c >= '0' && c <= '9') ||
-        c is '!' or '#' or '$' or '%' or '&' or '\'' or '*' or '+' or '-' or '/' or '=' or '?' or '^' or '_' or '`' or '{' or '|' or '}' or '~';
+        (c >= 'a' && c <= 'z')
+        || (c >= 'A' && c <= 'Z')
+        || (c >= '0' && c <= '9')
+        || c
+            is '!'
+                or '#'
+                or '$'
+                or '%'
+                or '&'
+                or '\''
+                or '*'
+                or '+'
+                or '-'
+                or '/'
+                or '='
+                or '?'
+                or '^'
+                or '_'
+                or '`'
+                or '{'
+                or '|'
+                or '}'
+                or '~';
 
     private static bool IsValidDomainLabel(ReadOnlySpan<char> label)
     {
-        if (label.IsEmpty || label.Length > 63) return false;
+        if (label.IsEmpty || label.Length > 63)
+            return false;
 
         // Check first and last character restrictions
-        if (!char.IsLetterOrDigit(label[0]) || !char.IsLetterOrDigit(label[^1])) return false;
+        if (!char.IsLetterOrDigit(label[0]) || !char.IsLetterOrDigit(label[^1]))
+            return false;
 
         // Check middle characters
         for (int i = 1; i < label.Length - 1; i++)
         {
             char c = label[i];
-            if (!char.IsLetterOrDigit(c) && c != '-') return false;
+            if (!char.IsLetterOrDigit(c) && c != '-')
+                return false;
         }
 
         return true;
@@ -184,7 +219,9 @@ internal static partial class ValidatorHelpers
         }
     }
 
-    [GeneratedRegex(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture)]
+    [GeneratedRegex(
+        @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture
+    )]
     private static partial Regex GetEmailRegex();
 }

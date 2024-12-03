@@ -11,7 +11,8 @@ internal static class DisposableDomains
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool Contains(ReadOnlySpan<char> domain)
     {
-        if (domain.IsEmpty) return false;
+        if (domain.IsEmpty)
+            return false;
         return _domains.Contains(domain.ToString());
     }
 

@@ -1,12 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
+using Microsoft.CodeAnalysis;
 
 namespace Disposable.Generator;
 
 [Generator]
 public sealed class DisposableDomainsGenerator : IIncrementalGenerator
 {
-    private const string Url = "https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt";
+    private const string Url =
+        "https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -15,17 +16,17 @@ public sealed class DisposableDomainsGenerator : IIncrementalGenerator
         context.RegisterPostInitializationOutput(ctx =>
         {
             var source = $$"""
-                using System.Collections.Immutable;
+            using System.Collections.Immutable;
 
-                namespace Disposable.Generator;
+            namespace Disposable.Generator;
 
-                internal static class GeneratedDomains
-                {
-                    internal static readonly ImmutableArray<string> Values = ImmutableArray.Create(
-                        {{string.Join(",\n                        ", domains.Select(d => $"\"{d}\""))}}
-                    );
-                }
-                """;
+            internal static class GeneratedDomains
+            {
+                internal static readonly ImmutableArray<string> Values = ImmutableArray.Create(
+                    {{string.Join(",\n                        ", domains.Select(d => $"\"{d}\""))}}
+                );
+            }
+            """;
 
             ctx.AddSource("GeneratedDomains.g.cs", source);
         });
@@ -35,12 +36,19 @@ public sealed class DisposableDomainsGenerator : IIncrementalGenerator
     {
         using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
         var response = client.GetAsync(Url).ConfigureAwait(false).GetAwaiter().GetResult();
-        var content = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        var content = response
+            .Content.ReadAsStringAsync()
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
 
-        return [.. content
-            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
-            .Where(d => d.Length > 0)
-            .Select(d => d.ToLowerInvariant())
-            .OrderBy(d => d)];
+        return
+        [
+            .. content
+                .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Where(d => d.Length > 0)
+                .Select(d => d.ToLowerInvariant())
+                .OrderBy(d => d)
+        ];
     }
 }

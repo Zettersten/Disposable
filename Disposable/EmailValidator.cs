@@ -12,7 +12,8 @@ public static class EmailValidator
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsDisposable(ReadOnlySpan<char> email)
     {
-        if (!TryGetDomain(email, out var domain)) return true;
+        if (!TryGetDomain(email, out var domain))
+            return true;
         return DisposableDomains.Contains(domain);
     }
 
@@ -24,7 +25,8 @@ public static class EmailValidator
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsDisposable(string email)
     {
-        if (!TryGetDomain(email, out var domain)) return true;
+        if (!TryGetDomain(email, out var domain))
+            return true;
         return DisposableDomains.Contains(domain);
     }
 
@@ -32,10 +34,12 @@ public static class EmailValidator
     {
         domain = default;
 
-        if (email.IsEmpty) return false;
+        if (email.IsEmpty)
+            return false;
 
         var atIndex = email.IndexOf('@');
-        if (atIndex <= 0 || atIndex == email.Length - 1) return false;
+        if (atIndex <= 0 || atIndex == email.Length - 1)
+            return false;
 
         domain = email[(atIndex + 1)..];
         return IsValidDomain(domain);
@@ -44,7 +48,8 @@ public static class EmailValidator
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsValidDomain(ReadOnlySpan<char> domain)
     {
-        if (domain.IsEmpty) return false;
+        if (domain.IsEmpty)
+            return false;
 
         var lastDot = domain.LastIndexOf('.');
         return lastDot > 0 && lastDot < domain.Length - 1;
