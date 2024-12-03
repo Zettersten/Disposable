@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 
 namespace Disposable;
 
@@ -13,7 +13,19 @@ public static class EmailValidator
     public static bool IsDisposable(ReadOnlySpan<char> email)
     {
         if (!TryGetDomain(email, out var domain)) return true;
-        return DisposableDomains.Contains(domain.ToString());
+        return DisposableDomains.Contains(domain);
+    }
+
+    /// <summary>
+    /// Validates and checks if an email address is from a disposable domain.
+    /// </summary>
+    /// <param name="email">Email address to validate</param>
+    /// <returns>True if email is invalid or from a disposable domain</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsDisposable(string email)
+    {
+        if (!TryGetDomain(email, out var domain)) return true;
+        return DisposableDomains.Contains(domain);
     }
 
     private static bool TryGetDomain(ReadOnlySpan<char> email, out ReadOnlySpan<char> domain)

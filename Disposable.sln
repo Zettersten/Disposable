@@ -1,11 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable", "Disposable\Disposable.csproj", "{CB4769A3-07DB-4942-B8C2-101E35035CD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Generator", "Disposable.Generator\Disposable.Generator.csproj", "{72272FE7-BE1D-49F8-863A-E2B0DA6A9C5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{A2F8562E-9B3A-405F-B48D-24812D65CAA4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+		icon.png = icon.png
+		LICENSE = LICENSE
+		.github\workflows\nuget-publish.yml = .github\workflows\nuget-publish.yml
+		.husky\pre-commit = .husky\pre-commit
+		readme.md = readme.md
+		.husky\task-runner.json = .husky\task-runner.json
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
