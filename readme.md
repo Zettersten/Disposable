@@ -2,7 +2,7 @@
 
 # Disposable 📧
 
-[![NuGet version](https://badge.fury.io/nu/Disposable.svg)](https://badge.fury.io/nu/Disposable)
+[![NuGet version](https://badge.fury.io/nu/Disposable.Email.svg)](https://badge.fury.io/nu/Disposable.Email)
 
 A high-performance .NET library for validating disposable/temporary email domains. Built with performance and efficiency in mind, it provides a simple way to check if an email address or domain is from a known disposable email provider.
 
